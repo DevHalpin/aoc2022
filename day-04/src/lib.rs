@@ -1,7 +1,7 @@
 pub fn part1(input: &str) -> String {
-    let result: u32 = input
+    let result = input
         .lines()
-        .map(|line| {
+        .filter(|line| {
             let shifts = line.split(',').collect::<Vec<_>>();
             let first_shift = shifts[0];
             let second_shift = shifts[1];
@@ -15,23 +15,19 @@ pub fn part1(input: &str) -> String {
                 .map(|s| s.parse::<u32>().unwrap())
                 .collect();
 
-            if f_shift_numbers[0] <= s_shift_numbers[0] && f_shift_numbers[1] >= s_shift_numbers[1]
+            return f_shift_numbers[0] <= s_shift_numbers[0] && f_shift_numbers[1] >= s_shift_numbers[1]
                 || s_shift_numbers[0] <= f_shift_numbers[0]
                     && s_shift_numbers[1] >= f_shift_numbers[1]
-            {
-                1
-            } else {
-                0
-            }
+            
         })
-        .sum::<u32>();
+        .count();
     result.to_string()
 }
 
 pub fn part2(input: &str) -> String {
-    let result: u32 = input
+    let result = input
         .lines()
-        .map(|line| {
+        .filter(|line| {
             let shifts = line.split(',').collect::<Vec<_>>();
             let first_shift = shifts[0];
             let second_shift = shifts[1];
@@ -45,15 +41,12 @@ pub fn part2(input: &str) -> String {
                 .map(|s| s.parse::<u32>().unwrap())
                 .collect();
 
-            if (s_shift_numbers[0]..=s_shift_numbers[1]).contains(&f_shift_numbers[0]) || (s_shift_numbers[0]..=s_shift_numbers[1]).contains(&f_shift_numbers[1]) ||
-            (f_shift_numbers[0]..=f_shift_numbers[1]).contains(&s_shift_numbers[0]) || (f_shift_numbers[0]..=f_shift_numbers[1]).contains(&s_shift_numbers[1])
-            {
-                1
-            } else {
-                0
-            }
+            return (s_shift_numbers[0]..=s_shift_numbers[1]).contains(&f_shift_numbers[0])
+                || (s_shift_numbers[0]..=s_shift_numbers[1]).contains(&f_shift_numbers[1])
+                || (f_shift_numbers[0]..=f_shift_numbers[1]).contains(&s_shift_numbers[0])
+                || (f_shift_numbers[0]..=f_shift_numbers[1]).contains(&s_shift_numbers[1]);
         })
-        .sum::<u32>();
+        .count();
     result.to_string()
 }
 
